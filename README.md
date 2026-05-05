@@ -9,7 +9,7 @@
 
 A digital asset that combines a privacy-preserving NYM token with a legally binding eIDAS-compliant identity certificate, functioning as a regulated alternative to a non-fungible token (NFT). Unlike an NFT, an NYMe   embeds verifiable legal identity and consent status while preserving pseudonymity.
 
-Unlike NFTs, which rely solely on blockchain rarity, NYMes integrate legal identity via eIDAS and pseudonymity via NYM tokens. The platform issues each user a unique NYMe certifying both ownership andlegal compliance.
+Unlike NFTs, which rely solely on blockchain rarity, NYMes integrate legal identity via eIDAS and pseudonymity via NYM tokens. The platform issues each user a unique NYMe certifying both ownership and legal compliance.
 
 **Origin:**
 
