@@ -1,7 +1,7 @@
 **[NYMe](https://oc2mx.net/NYMe.html)** (n.)  
 **Pronunciation:** /ˈnɪmi/   
 **Plural:** NYMes  
-**Etymology:** Formed by blending NYM token (from Greek nym — name, pseudonym) and eIDAS (EU regulation on electronic identification and trust services), with respelling ofthe final element as *-e* for noun formation.  
+**Etymology:** Formed by blending NYM token (from Greek nym — name, pseudonym) and eIDAS (EU regulation on electronic identification and trust services), with respelling of the final element as *-e* for noun formation.  
 
 **Frequency (band):** 0 (neologism, not yet in general circulation)
 
