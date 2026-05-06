@@ -182,8 +182,8 @@ func (c *NYMeApp) setupUI() {
 		if !strings.HasPrefix(s, "n1") {
 			return fmt.Errorf("must start with 'n1'")
 		}
-		if len(s) < 44 || len(s) > 54 {
-			return fmt.Errorf("address must be 44-54 characters long")
+		if len(s) < 40 || len(s) > 54 {
+			return fmt.Errorf("address must be 40-54 characters long")
 		}
 		return nil
 	}
@@ -197,8 +197,8 @@ func (c *NYMeApp) setupUI() {
 		if !strings.HasPrefix(s, "n1") {
 			return fmt.Errorf("must start with 'n1'")
 		}
-		if len(s) < 44 || len(s) > 54 {
-			return fmt.Errorf("address must be 44-54 characters long")
+		if len(s) < 40 || len(s) > 54 {
+			return fmt.Errorf("address must be 40-54 characters long")
 		}
 		return nil
 	}
