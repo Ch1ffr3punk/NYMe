@@ -174,31 +174,37 @@ func (c *NYMeApp) setupUI() {
 	c.codeEntry.Text = generateUniqueCode()
 
 	c.sellerEntry = widget.NewEntry()
-	c.sellerEntry.SetPlaceHolder("n1f0r6zzu5hgh4rprk2v2gqcyr0f5fr84zv69d3x")
+	c.sellerEntry.SetPlaceHolder("n1...")
 	c.sellerEntry.Validator = func(s string) error {
 		if s == "" {
 			return nil
 		}
 		if !strings.HasPrefix(s, "n1") {
-                    return fmt.Errorf("must start with n1")
-                }
-                return nil
+			return fmt.Errorf("must start with 'n1'")
+		}
+		if len(s) < 44 || len(s) > 54 {
+			return fmt.Errorf("address must be 44-54 characters long")
+		}
+		return nil
 	}
 
 	c.buyerEntry = widget.NewEntry()
-	c.buyerEntry.SetPlaceHolder("n150cpdafe72lm6etqmahdhppfs0kdeha07muyas")
-	c.buyerEntry.Validator = func(s string) error {
+	c.buyerEntry.SetPlaceHolder("n1...")
+        c.buyerEntry.Validator = func(s string) error {
 		if s == "" {
 			return nil
 		}
 		if !strings.HasPrefix(s, "n1") {
-                    return fmt.Errorf("must start with n1")
-                }
-                return nil
+			return fmt.Errorf("must start with 'n1'")
+		}
+		if len(s) < 44 || len(s) > 54 {
+			return fmt.Errorf("address must be 44-54 characters long")
+		}
+		return nil
 	}
 
 	c.txEntry = widget.NewEntry()
-	c.txEntry.SetPlaceHolder("CEB344DA8C0B497009F6CAA283CE63D5A2E8AE9AB0ED7749A4402AAC20D66519")
+	c.txEntry.SetPlaceHolder("")
 	c.txEntry.Validator = func(s string) error {
 		if s == "" {
 			return nil
@@ -240,7 +246,7 @@ func (c *NYMeApp) setupUI() {
 		if text == "" {
 			c.buyerStatus.Hide()
 		} else if err := c.buyerEntry.Validate(); err == nil {
-			c.buyerStatus.SetText("")
+			c.buyerStatus.SetText("valid ✓")
 			c.buyerStatus.Importance = widget.SuccessImportance
 			c.buyerStatus.Show()
 		} else {
@@ -254,7 +260,7 @@ func (c *NYMeApp) setupUI() {
 		if text == "" {
 			c.txStatus.Hide()
 		} else if err := c.txEntry.Validate(); err == nil {
-			c.txStatus.SetText("")
+			c.txStatus.SetText("valid ✓")
 			c.txStatus.Importance = widget.SuccessImportance
 			c.txStatus.Show()
 		} else {
@@ -365,7 +371,7 @@ func (c *NYMeApp) setupUI() {
 			c.buyerStatus,
 		),
 		container.NewVBox(
-			widget.NewLabel("Nym"),
+			widget.NewLabel("NYM"),
 			c.nymAmountEntry,
 			c.nymStatus,
 		),
