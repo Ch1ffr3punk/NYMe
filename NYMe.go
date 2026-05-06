@@ -539,7 +539,7 @@ func saveToFile(data FormData, win fyne.Window) {
 	content.WriteString(fmt.Sprintf("Code: %s\n", data.Code))
 
 	if data.Nym != "" {
-		content.WriteString(fmt.Sprintf("Nym: %s\n", data.Nym))
+		content.WriteString(fmt.Sprintf("NYM: %s\n", data.Nym))
 	}
 
 	if data.Seller != "" {
