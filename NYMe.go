@@ -473,7 +473,7 @@ func (c *NYMeApp) showInfoPopup() {
 		widget.NewSeparator(),
 		container.NewHBox(layout.NewSpacer(), projectLink, layout.NewSpacer()),
 		widget.NewLabelWithStyle("released under the Apache 2.0 license", fyne.TextAlignCenter, fyne.TextStyle{}),
-		widget.NewLabelWithStyle("2026 Ch1ffr3punk", fyne.TextAlignCenter, fyne.TextStyle{}),
+		widget.NewLabelWithStyle("© 2026 Ch1ffr3punk", fyne.TextAlignCenter, fyne.TextStyle{}),
 		container.NewHBox(layout.NewSpacer(), okButton, layout.NewSpacer()),
 	)
 	dialog.ShowCustomWithoutButtons("", content, c.window)
