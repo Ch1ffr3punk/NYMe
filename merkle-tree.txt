@@ -1,0 +1,11 @@
+--- FILE HASHES (RIPEMD-160) ---
+LabGrotesque-Bold.ttf: b99c6670abf08cbcb148216c6ba0ad291c1fda1a
+NYMe.go: b0e750e86da48a05b2b514eaeff6675ebb89ad9e
+NYMe.png: e0277c46115a77c8c47dae89dff9a20bd188dcec
+NYMe.svg: 0d7a125d06cc220e9590629476851fbedf14dcea
+bundle_font.go: 34439dd7ea34d8ae8f157cec11ab630e9dc70a68
+go.mod: 1847822cd23c31771fe7e659f1db57a75ef085a3
+go.sum: 201e3a06115d82ac8ede6c82e3f54fad0b60bba0
+
+--- ROOT HASH (RIPEMD-160) ---
+008ef7ac9621842a23f953ad0daecb0583787595
