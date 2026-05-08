@@ -533,7 +533,7 @@ func (g *GUI) onBuyClick() {
 	
 	inputs := container.New(layout.NewFormLayout(),
 		widget.NewLabel("Signature:"), sigEntry,
-		widget.NewLabel("NYMe.txt:"), NYMeEntry,
+		widget.NewLabel("NYMe:"), NYMeEntry,
 	)
 	
 	cancelBtn := widget.NewButton("Cancel", func() {
@@ -578,7 +578,7 @@ func (g *GUI) onBuyClick() {
 	buttons := container.NewCenter(container.NewHBox(submitBtn, cancelBtn))
 	content := container.NewVBox(inputs, widget.NewSeparator(), buttons)
 	
-	d := dialog.NewCustomWithoutButtons("Buy Token", content, g.window)
+	d := dialog.NewCustomWithoutButtons("Buy NYMe", content, g.window)
 	d.Resize(fyne.NewSize(500, 400))
 	fyne.Do(func() { d.Show() })
 }
