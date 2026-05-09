@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"crypto"
 	"crypto/ed25519"
 	"crypto/rand"
@@ -10,6 +11,7 @@ import (
 	"hash"
 	"image"
 	"image/color"
+	"image/png"
 	"io"
 	"net/url"
 	"os"
@@ -32,7 +34,6 @@ import (
 	"github.com/tjfoc/gmsm/sm3"
 )
 
-// Green Theme Wrapper
 type greenThemeWrapper struct {
 	base fyne.Theme
 }
@@ -333,6 +334,10 @@ func (g *GUI) continueSign() {
 			return
 		}
 		
+		memoContent := strings.ReplaceAll(sigContent, "\n", "")
+		memoPath := filepath.Join(filepath.Dir(g.currentFile), "Memo.txt")
+		os.WriteFile(memoPath, []byte(memoContent), 0644)
+		
 		NYMeCode := generateNYMeCode()
 		NYMeToken := formatNYMeToken(sigContent, NYMeCode)
 		NYMePath := filepath.Join(filepath.Dir(g.currentFile), "NYMe.txt")
@@ -560,18 +565,30 @@ func (g *GUI) onBuyClick() {
 		h.Write([]byte(sigBlock + NYMeContent))
 		result := hex.EncodeToString(h.Sum(nil))
 		
-		buyPath := "buy.txt"
-		if err := os.WriteFile(buyPath, []byte(result), 0644); err != nil {
-			dialog.ShowError(fmt.Errorf("Failed to save buy.txt: "+err.Error()), g.window)
-			return
-		}
-		
-		dialog.ShowInformation("Success", fmt.Sprintf("buy.txt saved to:\n%s", buyPath), g.window)
-		
-		overlays := g.window.Canvas().Overlays()
-		if overlays.Top() != nil {
-			overlays.Remove(overlays.Top())
-		}
+		saveDialog := dialog.NewFileSave(func(writer fyne.URIWriteCloser, err error) {
+			if err != nil {
+				dialog.ShowError(fmt.Errorf("Save error: "+err.Error()), g.window)
+				return
+			}
+			if writer == nil {
+				return
+			}
+			defer writer.Close()
+			
+			if _, err := writer.Write([]byte(result)); err != nil {
+				dialog.ShowError(fmt.Errorf("Write error: "+err.Error()), g.window)
+				return
+			}
+			
+			dialog.ShowInformation("Success", "buy.txt saved successfully", g.window)
+			
+			overlays := g.window.Canvas().Overlays()
+			if overlays.Top() != nil {
+				overlays.Remove(overlays.Top())
+			}
+		}, g.window)
+		saveDialog.SetFileName("buy.txt")
+		saveDialog.Show()
 	})
 	
 	submitBtn.Importance = widget.HighImportance
@@ -687,6 +704,47 @@ func (g *GUI) showIdenticonFromPubKey(pubKeyHex string) {
 	fyneImg.FillMode = canvas.ImageFillContain
 	fyneImg.SetMinSize(fyne.NewSize(128, 128))
 	
+	saveBtn := widget.NewButton("Save Identicon", func() {
+		saveDialog := dialog.NewFileSave(func(writer fyne.URIWriteCloser, err error) {
+			if err != nil {
+				dialog.ShowError(fmt.Errorf("Save error: "+err.Error()), g.window)
+				return
+			}
+			if writer == nil {
+				return
+			}
+			defer writer.Close()
+			
+			imgWithTransparent := image.NewRGBA(image.Rect(0, 0, 256, 256))
+			for y := 0; y < 256; y++ {
+				for x := 0; x < 256; x++ {
+					r, gb, bb, a := img.At(x, y).RGBA()
+					if a == 0 {
+						imgWithTransparent.SetRGBA(x, y, color.RGBA{0, 0, 0, 0})
+					} else {
+						imgWithTransparent.SetRGBA(x, y, color.RGBA{uint8(r >> 8), uint8(gb >> 8), uint8(bb >> 8), uint8(a >> 8)})
+					}
+				}
+			}
+			
+			var buf bytes.Buffer
+			if err := png.Encode(&buf, imgWithTransparent); err != nil {
+				dialog.ShowError(fmt.Errorf("PNG encode error: "+err.Error()), g.window)
+				return
+			}
+			
+			if _, err := writer.Write(buf.Bytes()); err != nil {
+				dialog.ShowError(fmt.Errorf("Write error: "+err.Error()), g.window)
+				return
+			}
+			
+			dialog.ShowInformation("Success", "Identicon saved as 256x256 PNG", g.window)
+		}, g.window)
+		saveDialog.SetFileName("identicon.png")
+		saveDialog.Show()
+	})
+	saveBtn.Importance = widget.MediumImportance
+	
 	okBtn := widget.NewButton("OK", func() {
 		if overlays := g.window.Canvas().Overlays(); overlays.Top() != nil {
 			overlays.Remove(overlays.Top())
@@ -697,7 +755,7 @@ func (g *GUI) showIdenticonFromPubKey(pubKeyHex string) {
 	content := container.NewVBox(
 		container.NewCenter(fyneImg),
 		container.NewCenter(widget.NewLabel("Verification successful!")),
-		container.NewCenter(okBtn),
+		container.NewCenter(container.NewHBox(saveBtn, okBtn)),
 	)
 	
 	d := dialog.NewCustomWithoutButtons("", content, g.window)
