@@ -39,7 +39,12 @@ type greenThemeWrapper struct {
 }
 
 func (g *greenThemeWrapper) Font(s fyne.TextStyle) fyne.Resource {
-	return g.base.Font(s)
+    if s.Bold && !s.Italic && !s.Monospace {
+        if resourceLabGrotesqueBoldTtf != nil {
+            return resourceLabGrotesqueBoldTtf
+        }
+    }
+    return theme.DefaultTheme().Font(s)
 }
 
 func (g *greenThemeWrapper) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
