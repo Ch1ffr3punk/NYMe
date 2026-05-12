@@ -50,11 +50,11 @@ func (g *greenThemeWrapper) Font(s fyne.TextStyle) fyne.Resource {
 func (g *greenThemeWrapper) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
 	switch name {
 	case theme.ColorNamePrimary:
-		return color.NRGBA{R: 20, G: 231, B: 111, A: 255}
+		return color.NRGBA{R: 122, G: 110, B: 243, A: 255}
 	case theme.ColorNameForegroundOnPrimary:
-		return color.Black
+		return color.NRGBA{R: 255, G: 255, B: 255, A: 255}
 	case theme.ColorNameHyperlink:
-		return color.NRGBA{R: 20, G: 231, B: 111, A: 255}
+		return color.NRGBA{R: 122, G: 110, B: 243, A: 255}
 	default:
 		return g.base.Color(name, variant)
 	}
